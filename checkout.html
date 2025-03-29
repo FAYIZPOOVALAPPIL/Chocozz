@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>ChocoLux</title>
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <!--slick slider stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" />
+  <!-- slick slider -->
+
+  <link rel="stylesheet" href="css/slick-theme.css" />
+  <!-- font awesome style -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+  <style>
+       .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        #cardDetails {
+            display: none;
+        }
+        .success-animation {
+            display: none;
+            font-size: 24px;
+            color: green;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+
+<body class="sub_page">
+
+  <div class="main_body_content">
+
+    <div class="hero_area">
+      <!-- header section strats -->
+      <header class="header_section">
+        <div class="container-fluid">
+          <nav class="navbar navbar-expand-lg custom_nav-container ">
+            <a class="navbar-brand" href="index.html">
+              Chocozz
+            </a>
+            </a>
+           
+      </header>
+      <!-- end header section -->
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Checkout</h2>
+        <form id="checkoutForm">
+            <h4>Customer Details</h4>
+            <input type="text" id="name" class="form-control mb-2" placeholder="Full Name" required>
+            <input type="tel" id="phone" class="form-control mb-2" placeholder="Phone Number" required>
+            <input type="email" id="email" class="form-control mb-2" placeholder="Email" required>
+            <input type="text" id
+            ="house" class="form-control mb-2" placeholder="House Number" required>
+            <input type="text" id="street" class="form-control mb-2" placeholder="Street" required>
+            <input type="text" id="town" class="form-control mb-2" placeholder="Town" required>
+            <input type="text" id="district" class="form-control mb-2" placeholder="District" required>
+            <input type="text" id="state" class="form-control mb-2" placeholder="State" required>
+            <input type="text" id="pin" class="form-control mb-2" placeholder="PIN Code" required>
+            
+            <h4>Payment Method</h4>
+            <select id="paymentMethod" class="form-control mb-3" required>
+                <option value="credit">Credit Card</option>
+                <option value="debit">Debit Card</option>
+                <option value="cod">Cash on Delivery</option>
+            </select>
+            <div id="cardDetails">
+                <input type="text" id="cardNumber" class="form-control mb-2" placeholder="Card Number" required>
+                <input type="text" id="expiry" class="form-control mb-2" placeholder="MM/YY" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Proceed to Pay</button>
+        </form>
+        <div id="successMessage" class="success-animation">✅ Payment Successful! 🎉</div>
+    </div>
+
+
+    <!-- contact section -->
+    
+  <!-- jQery -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <!-- bootstrap js -->
+  <script src="js/bootstrap.js"></script>
+  <!-- slick slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+  <!-- custom js -->
+  <script src="js/checkout.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+  <!-- End Google Map -->
+
+</body>
+
+</html>

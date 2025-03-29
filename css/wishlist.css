@@ -1,0 +1,8 @@
+.slide-transition-img {
+    height: 150px;
+    object-fit: contain;
+    transition: transform 0.3s ease-in-out;
+  }
+  .slide-transition-img:hover {
+    transform: translateX(10px);
+  }

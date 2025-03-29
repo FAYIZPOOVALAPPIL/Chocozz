@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .testimonial-table {
+      margin-top: 20px;
+    }
+    .testimonial-table img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    
+        body { font-family: Arial, sans-serif; }
+        .small-input { font-size: 14px; padding: 5px; }
+        .form-container { max-width: 400px; margin: auto; }
+        #preview-image { width: 100px; margin-top: 5px; display: none; }
+         /* Sidebar Styles */
+    .sidebar {
+      width: 200px;
+      height: 100vh;
+      background: #343a40;
+      color: white;
+      position: fixed;
+      left: -200px;  /* Hidden by default */
+      top: 0;
+      transition: left 0.3s;
+      padding: 10px;
+      z-index: 1000;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    /* Toggle Button Styles */
+    .toggle-btn {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      background: #343a40;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1100;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+    a{
+            text-decoration: none; /* Underline remove cheyyan */
+            color: rgb(255, 255, 255); /* Link color black aakkan */
+        }
+        li{
+          padding-left: 20px;
+        }
+        
+    
+  </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">(CHOCOZZ) admin-panel </a>
+            <div>
+              <button class="btn btn-warning btn-sm" onclick="goToMain()">Go to Main Page</button>
+    
+            </div>
+        </div>
+    </nav>
+
+      <!-- Toggle Button -->
+      <div class="toggle-btn" onclick="toggleSidebar()">
+        ☰
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <h5 class="text-center">Admin Menu</h5>
+        <ul class="text-light">
+          <li><a href="admin-panel.html">Dashboard</a></li>
+          <li><a href="orders.html">Orders</a></li>
+          <li><a href="customer-details.html">customer details</a></li>
+          <li><a href="tesimonial admin.html">Testimonials</a></li>
+        </ul>
+      </div>
+
+
+  <div class="container mt-5">
+    <h2>Manage Testimonials</h2>
+    <form id="testimonialForm">
+      <div class="form-group">
+        <label for="clientName">Client Name</label>
+        <input type="text" class="form-control" id="clientName" required>
+      </div>
+      <div class="form-group">
+        <label for="clientTestimonial">Testimonial</label>
+        <textarea class="form-control" id="clientTestimonial" rows="5" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="clientImage">Client Image</label>
+        <input type="file" class="form-control" id="clientImage" accept="image/*">
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitButton">Add Testimonial</button>
+    </form>
+
+    <table class="table testimonial-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Testimonial</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="testimonialTableBody">
+        <!-- Testimonials will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+
+function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+    function goToMain() {
+            window.location.href = "index.html";
+        }
+
+let testimonials = JSON.parse(localStorage.getItem('testimonials')) || [];
+let editIndex = null;
+
+// Function to render testimonials in the table
+function renderTestimonials() {
+  const tableBody = document.getElementById('testimonialTableBody');
+  tableBody.innerHTML = '';
+
+  testimonials.forEach((testimonial, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td><img src="${testimonial.image || 'images/client-img.jpg'}" alt="${testimonial.name}" style="width: 50px; height: 50px; border-radius: 50%;"></td>
+      <td>${testimonial.name}</td>
+      <td>${testimonial.text}</td>
+      <td>
+        <button class="btn btn-warning btn-sm" onclick="editTestimonial(${index})">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteTestimonial(${index})">Delete</button>
+      </td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+
+// Function to convert image to Base64
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
+// Function to add or update testimonial
+document.getElementById('testimonialForm').addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  const clientName = document.getElementById('clientName').value;
+  const clientTestimonial = document.getElementById('clientTestimonial').value;
+  const clientImage = document.getElementById('clientImage').files[0];
+
+  let imageBase64 = null;
+  if (clientImage) {
+    imageBase64 = await toBase64(clientImage);
+  }
+
+  const testimonial = {
+    name: clientName,
+    text: clientTestimonial,
+    image: imageBase64
+  };
+
+  if (editIndex === null) {
+    // Add new testimonial
+    testimonials.push(testimonial);
+    alert('Testimonial added successfully!');
+  } else {
+    // Update existing testimonial
+    testimonials[editIndex] = testimonial;
+    editIndex = null;
+    document.getElementById('submitButton').textContent = 'Add Testimonial';
+    alert('Testimonial updated successfully!');
+  }
+
+  // Save to localStorage
+  localStorage.setItem('testimonials', JSON.stringify(testimonials));
+
+  // Render testimonials
+  renderTestimonials();
+
+  // Reset form
+  document.getElementById('testimonialForm').reset();
+});
+
+// Function to edit testimonial
+function editTestimonial(index) {
+  const testimonial = testimonials[index];
+  document.getElementById('clientName').value = testimonial.name;
+  document.getElementById('clientTestimonial').value = testimonial.text;
+  document.getElementById('submitButton').textContent = 'Update Testimonial';
+  editIndex = index;
+  alert('Editing testimonial: ' + testimonial.name);
+}
+
+// Function to delete testimonial
+function deleteTestimonial(index) {
+  const testimonial = testimonials[index];
+  if (confirm('Are you sure you want to delete the testimonial by ' + testimonial.name + '?')) {
+    testimonials.splice(index, 1);
+    localStorage.setItem('testimonials', JSON.stringify(testimonials));
+    renderTestimonials();
+    alert('Testimonial deleted successfully!');
+  }
+}
+
+// Initial render
+renderTestimonials();
+  </script>
+</body>
+</html>
